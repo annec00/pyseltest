@@ -1,32 +1,16 @@
-from selenium import webdriver
 from time import sleep
 from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 
 
-
-def test_login_logout():
-
-
-    chrome_options = Options()
-
-    prefs = {
-        # "credentials_enable_service": False,
-        # "profile.password_manager_enabled": False,
-        "profile.password_manager_leak_detection": False,
-    }
-
-
-    chrome_options.add_experimental_option("prefs", prefs)
-    driver = webdriver.Chrome(options=chrome_options)
-
+def test_login_logout(driver):
 
     driver.get("https://www.saucedemo.com/")
+    wait = WebDriverWait(driver, 2);
+    wait.until(EC.visibility_of_element_located((By.CLASS_NAME, "login_logo")))
 
-    sleep(2)
-
-    # username_input = driver.find_element("id", "user-name")
     username_input = driver.find_element(by=By.ID, value="user-name")
     password_input = driver.find_element(by=By.ID, value="password")
     login_button = driver.find_element(by=By.ID, value="login-button")
@@ -35,19 +19,14 @@ def test_login_logout():
     password_input.send_keys("secret_sauce")
     login_button.click()
 
-    sleep(10)
-
-
+    menu_button = wait.until(EC.visibility_of_element_located((By.ID, "react-burger-menu-btn")))
     page_title = driver.find_element(by=By.CLASS_NAME, value="title")
+
     assert page_title.text == "Products"
 
-    menu_button = driver.find_element(by=By.ID, value="react-burger-menu-btn")
-    menu_button.click()
-
+    print("Login successful. Page title is:", page_title.text)
+    print("Waiting for 2 seconds before logging out...")
     sleep(2)
-    logout_link = driver.find_element(by=By.ID, value="logout_sidebar_link")
-    logout_link.click()
+    wait.until(EC.element_to_be_clickable((menu_button))).click()
+    wait.until(EC.element_to_be_clickable((By.ID, "logout_sidebar_link"))).click()
 
-    sleep(10)
-
-    driver.quit()

@@ -1,11 +1,6 @@
-from time import sleep
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from src.saucedemo.pages.menu_sidebar_page import MenuSidebarPage
 from src.saucedemo.pages.home_page import HomePage
 from src.saucedemo.pages.login_page import LoginPage
-
+from src.saucedemo.pages.menu_sidebar_page import MenuSidebarPage
 
 
 def test_login_logout(driver):
@@ -14,7 +9,6 @@ def test_login_logout(driver):
     home_page = HomePage(driver)
     login_page.open_page()
     login_page.wait_for_page_load()
-
 
     login_page.enter_username("standard_user")
     login_page.enter_password("secret_sauce")
@@ -28,5 +22,3 @@ def test_login_logout(driver):
 
     login_page.wait_for_page_load()
     assert login_page.driver.current_url == login_page.url
-
-

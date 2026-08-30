@@ -1,7 +1,7 @@
+from selenium.webdriver.common.by import By
+
 from config.sauce_demo_config import BASE_URL
 from src.common.base_page import BasePage
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
 
 
 class LoginPage(BasePage):
@@ -33,5 +33,3 @@ class LoginPage(BasePage):
 
     def click_login_button(self):
         self.click(self.LOGIN_BUTTON)
-
-    

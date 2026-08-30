@@ -1,4 +1,6 @@
 from selenium import webdriver
+
+
 class DriverFactory:
     @staticmethod
     def get_driver(browser_name: str, headless: bool = False):
@@ -37,4 +39,6 @@ class DriverFactory:
             return driver
 
         else:
-            raise ValueError(f"Unsupported browser: {browser_name}. Supported browsers are: chrome, firefox.")
+            raise ValueError(
+                f"Unsupported browser: {browser_name}. Supported browsers are: chrome, firefox."
+            )

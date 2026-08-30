@@ -1,6 +1,4 @@
 from selenium import webdriver
-
-
 class DriverFactory:
     @staticmethod
     def get_driver(browser_name: str, headless: bool = False):

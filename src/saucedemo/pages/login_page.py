@@ -11,15 +11,19 @@ class LoginPage(BasePage):
     USERNAME_INPUT = (By.ID, "user-name")
     PASSWORD_INPUT = (By.ID, "password")
     LOGIN_BUTTON = (By.ID, "login-button")
+    LOGO = (By.CLASS_NAME, "login_logo")
 
     def __init__(self, driver):
         super().__init__(driver)
         self.url = BASE_URL
 
-    def load(self):
+    def open_page(self):
+        """Open the login page."""
+        self.driver.get(self.url)
+
+    def wait_for_page_load(self):
         """Load the login page."""
-        self.open(self.url)
-        self.wait.until(EC.visibility_of_element_located((By.CLASS_NAME, "login_logo")))
+        self.wait_for_visible(self.LOGO)
 
     def enter_username(self, username):
         self.type(self.USERNAME_INPUT, username)

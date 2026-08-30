@@ -11,7 +11,7 @@ class HomePage(BasePage):
     def __init__(self, driver):
         super().__init__(driver)
 
-    def wait_for_page_to_load(self, timeout=10):
+    def wait_for_page_load(self, timeout=10):
         """Wait for the home page to load by checking the visibility of the page title."""
         self.wait_for_visible(self.PAGE_TITLE)
 

@@ -1,7 +1,7 @@
 from src.common.base_page import BasePage
 from selenium.webdriver.common.by import By
 
-class MenuSidebar(BasePage):
+class MenuSidebarPage (BasePage):
 
     # Locators
     MENU_BUTTON = (By.ID, "react-burger-menu-btn")

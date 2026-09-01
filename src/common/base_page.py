@@ -18,6 +18,10 @@ class BasePage:
         """Find an element on the page using the specified locator."""
         return self.wait.until(EC.presence_of_element_located(locator))
 
+    def find_all(self, locator: tuple):
+        """Find all elements on the page using the specified locator."""
+        return self.driver.find_elements(*locator)
+
     def wait_for_visible(self, locator: tuple):
         """Wait for an element to be visible on the page."""
         return self.wait.until(EC.visibility_of_element_located(locator))
@@ -37,3 +41,11 @@ class BasePage:
         """Get the text of an element specified by the locator."""
         element = self.find(locator)
         return element.text
+
+    def is_element_displayed(self, locator: tuple) -> bool:
+        """Check if an element specified by the locator is displayed."""
+        try:
+            element = self.find(locator)
+            return element.is_displayed()
+        except Exception:
+            return False

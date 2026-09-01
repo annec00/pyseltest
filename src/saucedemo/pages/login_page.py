@@ -31,5 +31,11 @@ class LoginPage(BasePage):
     def enter_password(self, password):
         self.type(self.PASSWORD_INPUT, password)
 
+    def login(self, username, password):
+        """Perform the login action with the provided username and password."""
+        self.enter_username(username)
+        self.enter_password(password)
+        self.click_login_button()
+
     def click_login_button(self):
         self.click(self.LOGIN_BUTTON)

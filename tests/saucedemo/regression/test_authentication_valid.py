@@ -1,10 +1,10 @@
+from src.saucedemo.pages.header_page import HeaderPage
 from src.saucedemo.pages.home_page import HomePage
 from src.saucedemo.pages.login_page import LoginPage
-from src.saucedemo.pages.menu_sidebar_page import MenuSidebarPage
 
 
 def test_login_logout(driver):
-    menu_sidebar = MenuSidebarPage(driver)
+    header = HeaderPage(driver)
     login_page = LoginPage(driver)
     home_page = HomePage(driver)
     login_page.open_page()
@@ -17,8 +17,7 @@ def test_login_logout(driver):
 
     assert home_page.get_page_title() == "Products"
 
-    menu_sidebar.open_menu()
-    menu_sidebar.click_logout()
+    header.logout()
 
     login_page.wait_for_page_load()
     assert login_page.driver.current_url == login_page.url

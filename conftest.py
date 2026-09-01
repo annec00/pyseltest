@@ -3,6 +3,9 @@ import pytest
 from config.restful_booker_config import BASE_URL
 from src.common.driver_factory import DriverFactory
 from src.restful_booker.booking_service import BookingService
+from src.saucedemo.pages.cart_page import CartPage
+from src.saucedemo.pages.header_page import HeaderPage
+from src.saucedemo.pages.login_page import LoginPage
 
 
 def pytest_addoption(parser):
@@ -30,6 +33,39 @@ def driver(request):
     driver = DriverFactory.get_driver(browser_name, headless=headless)
     yield driver
     driver.quit()
+
+
+# Log in as whichever user the test asks for; log out afterwards.
+@pytest.fixture(scope="function")
+def login_as(driver):
+    """Yield a helper: call `login_as("problem_user")` in the test to log in as that user."""
+    state = {"logged_in": False}
+
+    def _login(username, password="secret_sauce"):
+        login_page = LoginPage(driver)
+        login_page.open_page()
+        login_page.wait_for_page_load()
+        login_page.login(username, password)
+        state["logged_in"] = True
+
+    yield _login
+
+    if state["logged_in"]:
+        HeaderPage(driver).logout()
+
+
+# Helper to clear the cart; call it in the test after logging in.
+@pytest.fixture(scope="function")
+def empty_cart(driver):
+    """Return a helper that navigates to the cart and removes all items."""
+
+    def _clear():
+        HeaderPage(driver).click_cart_icon()
+        cart_page = CartPage(driver)
+        cart_page.empty_cart()
+        cart_page.click_continue_shopping()  # back to the products page
+
+    return _clear
 
 
 # For API Tests

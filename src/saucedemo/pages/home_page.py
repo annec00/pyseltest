@@ -31,3 +31,8 @@ class HomePage(BasePage):
             if item.get_name() == name:
                 return item
         raise ValueError(f"Inventory item '{name}' not found")
+
+    def click_add_to_cart_by_name(self, name: str):
+        """Click the 'Add to Cart' button for the inventory item with the given name."""
+        item = self.get_inventory_item(name)
+        item.add_to_cart()

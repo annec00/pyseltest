@@ -42,3 +42,11 @@ class CartPage(BasePage):
         """Remove all items from the cart."""
         for item in self.get_cart_items():
             item.click_remove()
+
+    def click_remove_item_by_name(self, item_name: str):
+        """Click the remove button for a specific item in the cart by its name."""
+        for item in self.get_cart_items():
+            if item.get_item_name() == item_name:
+                item.click_remove()
+                return
+        raise ValueError(f"Cart item '{item_name}' not found")
